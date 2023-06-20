@@ -43,6 +43,27 @@ app.get("api/v1/resaurants/:id", async (req, res) => {
   }
 });
 
+app.post("/api/v1/restaurants", async (req, res) => {
+  try {
+    const results = await db.query(
+      `
+    INSERT INTO restaurants (name, location, price_range)
+    values ($1, $2, $3)
+    returning *
+    `,
+      [req.body.name, req.body.location, req.body.price_range]
+    );
+    res.status(201).json({
+      status: "success",
+      data: {
+        restaurant: results.rows[0],
+      },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 app.listen(port, () => {
   console.log(`server is up, listening on port ${port}`);
 });

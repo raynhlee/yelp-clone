@@ -1,7 +1,6 @@
 import React from "react";
 
 const StarRating = ({ rating }) => {
-  //rating =4
   const stars = [];
   for (let i = 1; i <= 5; i++) {
     if (i <= rating) {
